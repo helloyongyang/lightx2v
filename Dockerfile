@@ -14,8 +14,6 @@ RUN apt-get update && apt-get install -y vim tmux zip unzip wget git build-essen
 
 RUN pip install --no-cache-dir packaging ninja cmake scikit-build-core uv meson ruff pre-commit fastapi uvicorn requests -U
 
-RUN conda install conda-forge::ffmpeg=8.0.0 -y && ln -s /opt/conda/bin/ffmpeg /usr/bin/ffmpeg
-
 RUN git clone https://github.com/vllm-project/vllm.git && cd vllm \
     && python use_existing_torch.py && pip install -r requirements/build.txt \
     && pip install --no-cache-dir --no-build-isolation -v -e .
@@ -25,6 +23,8 @@ RUN git clone https://github.com/sgl-project/sglang.git && cd sglang/sgl-kernel 
 
 RUN pip install --no-cache-dir diffusers transformers tokenizers accelerate safetensors opencv-python numpy imageio \
     imageio-ffmpeg einops loguru qtorch ftfy easydict
+
+RUN conda install conda-forge::ffmpeg=8.0.0 -y && ln -s /opt/conda/bin/ffmpeg /usr/bin/ffmpeg
 
 RUN git clone https://github.com/Dao-AILab/flash-attention.git --recursive
 
